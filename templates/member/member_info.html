@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="member">
+    <p>유저정보...!</p>
+        {{ member }}
+        <p><a href="{% url 'member_edit' %}">정보 수정!</a></p>
+        <p><a href="{% url 'sign_out' pk=member.id %}">탈퇴 가즈아!</a></p>
+        <p><a href="{% url 'my_survey_list' %}">내 서베이 리스트 보러가기!</a></p>
+        <p><a href="{% url 'all_survey' %}">전체 서베이 리스트 보러가기!</a></p>
+        <p><a href="{% url 'my_draft_list' %}">내 드래프트 리스트 보러가기!</a></p>
+    </div>
+    <div>
+        <p>내가 관심있어한 서베이 목록!</p>
+        {% for survey_interest in survey_interests %}
+            <p>{{ survey_interest }}</p>
+        {% endfor %}
+    </div>
+    <div>
+        <p>내가 응답한 서베이 목록!</p>
+        {% for survey_respond in survey_responds %}
+            {{ survey_respond }}
+        {% endfor %}
+    </div>
+{% endblock %}

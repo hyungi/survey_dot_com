@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="survey">
+    <p>My Survey Info.</p>
+        {{ survey }}
+        <p><a href="{% url 'edit_survey' pk=survey.id %}">서베이 수정하기!</a></p>
+        <p><a href="{% url 'del_survey' pk=survey.id %}">서베이 지우기!</a></p>
+        <p><a href="{% url 'my_survey_list' %}">내 서베이 목록!</a></p>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="group">
+    <p>Group info list</p>
+        {% for group_info in group_infos %}
+            {{ group_info }}
+        <p><a href="{% url 'group_edit' pk=group_info.id %}">그룹 수정하기!</a></p>
+{#        <p><a href="{% url 'group_delete' pk=group_info.id %}">그룹 지우기!</a></p>#}
+        {% endfor %}
+
+    </div>
+{% endblock %}

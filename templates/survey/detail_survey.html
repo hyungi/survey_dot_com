@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="survey">
+    <p>Survey Info.</p>
+        {{ survey }}
+        [좋아요 갯수!!] {{ interest_count }}
+        <p><a href="{% url 'respond_survey' pk=survey.id %}">서베이 응답하기!</a></p>
+
+        {% if already_interested == 0 %}
+        <p><a href="{% url 'interest_survey' pk=survey.id %}">이 서베이에 관심있어요!</a></p>
+        {% else %}
+        <p><a href="{% url 'interest_survey' pk=survey.id %}">이 서베이에 관심취소!</a></p>
+        {% endif %}
+        <p><a href="{% url 'all_survey' %}">서베이 전체 목록 보기!</a></p>
+    </div>
+{% endblock %}

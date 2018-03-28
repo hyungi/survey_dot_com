@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="draft">
+    <p>Draft info list</p>
+            {{ draft }}
+        <p><a href="{% url 'edit_draft' pk=draft.id %}">드래프트 수정하기!</a></p>
+{#        <p><a href="{% url 'group_delete' pk=group_info.id %}">그룹 지우기!</a></p>#}
+    </div>
+{% endblock %}

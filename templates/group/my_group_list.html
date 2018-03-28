@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Group List Page</title>
+</head>
+<body>
+<p>My Group List Page</p>
+{% for belong in belongs %}
+    {{ belong }}
+    <p><a href="{% url 'my_group_detail' pk=belong.group_id %}">내 그룹 디테일 확인!</a></p>
+{% endfor %}
+<p><a href="{% url 'new_group' %}">그룹 추가하기!</a></p>
+
+</body>
+</html>

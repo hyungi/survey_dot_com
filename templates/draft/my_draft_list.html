@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Draft List Page</title>
+</head>
+<body>
+<p>My Draft List Page</p>
+{% for draft in drafts %}
+    {{ draft }}
+    <p><a href="{% url 'my_draft' pk=draft.id %}">내 드래프트 디테일 확인!</a></p>
+{% endfor %}
+<p><a href="{% url 'new_draft' %}">드래프트 추가하기!</a></p>
+
+</body>
+</html>

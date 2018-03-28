@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Group List Page</title>
+</head>
+<body>
+<p>All Group List Page</p>
+{% for group in groups %}
+    <p>{{ group }}</p>
+<p><a href="{% url 'apply_group' pk=group.id %}"> 나 이 그룹 마음에 들어 apply 할래! </a></p>
+
+{% endfor %}
+
+</body>
+</html>

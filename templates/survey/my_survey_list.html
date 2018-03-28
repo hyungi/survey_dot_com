@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey List Page</title>
+</head>
+<body>
+<p>Survey List Page</p>
+{% for survey in surveys %}
+    {{ survey.title }}
+<p><a href="{% url 'my_survey' pk=survey.id %}">서베이 보러가기!</a></p>
+{% endfor %}
+<p><a href="{% url 'new_survey' %}">서베이 만들러가기!</a></p>
+</body>
+</html>

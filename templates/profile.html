@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Profile</h1>
+
+<p>Your profile</p>
+
+    {{ user }}
+    <p><a href="{% url 'member_info' %}">정보 보러가기!</a></p>
+
+{% endblock %}
