@@ -7,7 +7,7 @@ from .models import Member
 
 
 def member_info(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         pk = request.user.id
         print(pk)
         member = Member.objects.get(pk=pk)
@@ -23,7 +23,7 @@ def member_info(request):
 
 
 def member_edit(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         pk = request.user.id
         print(pk)
         member = get_object_or_404(Member, pk=pk)
@@ -41,7 +41,7 @@ def member_edit(request):
 
 
 def sign_out(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         member = Member.objects.get(pk=pk)
 
         print("이 친구를 지우는 거..! ")

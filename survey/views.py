@@ -10,7 +10,7 @@ from member.models import Member
 
 # Survey CRUD
 def new_survey(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method == "POST":
             form = SurveyForm(request.POST)
             if form.is_valid():
@@ -27,7 +27,7 @@ def new_survey(request):
 
 
 def edit_survey(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         survey = get_object_or_404(Survey, pk=pk)
         if request.method == "POST":
             form = SurveyForm(request.POST, instance=survey)
@@ -43,7 +43,7 @@ def edit_survey(request, pk):
 
 
 def my_survey_list(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         '''
         Member -> SurveyProduce -> Survey
         '''
@@ -63,13 +63,13 @@ def my_survey_list(request):
 
 
 def my_survey(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         survey = Survey.objects.get(pk=pk)
         return render(request, 'survey/my_survey.html', {'survey': survey})
 
 
 def all_survey_list(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         pk = request.user.id
         member = Member.objects.get(pk=pk)
         surveys = Survey.objects.all()
@@ -81,12 +81,12 @@ def all_survey_list(request):
         })
 
     else:
-        return render(request, 'home.html')
+        return render(request, 'base.html')
 
 
 def del_survey(request, pk):
     # survey pk 가 넘어온다
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         survey = Survey.objects.filter(pk=pk).values()
 
         print("이 친구를 지우는 거..! ")
@@ -96,7 +96,7 @@ def del_survey(request, pk):
 
 def detail_survey(request, pk):
     # survey의 기본 정보을 보여준다.
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         survey = Survey.objects.get(pk=pk)
         # 이 서베이의 주인이 아님을 확인
         if SurveyProduce.objects.filter(pk=pk, member=request.user.id).count() == 0:
@@ -117,7 +117,7 @@ def detail_survey(request, pk):
 
 
 def respond_survey(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         member = Member.objects.get(pk=request.user.id)
         survey = Survey.objects.get(pk=pk)
         survey_respond_count = SurveyRespond.objects.filter(member=member, survey=survey).count()
@@ -138,7 +138,7 @@ def respond_survey(request, pk):
 
 
 def interest_survey(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         member = Member.objects.get(pk=request.user.id)
         survey = Survey.objects.get(pk=pk)
         if SurveyProduce.objects.filter(member=member, survey=survey).count() == 0:

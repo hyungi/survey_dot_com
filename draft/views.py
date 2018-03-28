@@ -8,7 +8,7 @@ from member.models import Member
 
 
 def new_draft(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         if request.method == "POST":
             form = DraftForm(request.POST)
             if form.is_valid():
@@ -27,7 +27,7 @@ def new_draft(request):
 
 
 def edit_draft(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         draft = get_object_or_404(Draft, pk=pk)
         if request.method == "POST":
             form = DraftForm(request.POST, instance=draft)
@@ -47,7 +47,7 @@ def edit_draft(request, pk):
 
 
 def my_draft_list(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         pk = request.user.id
         member = Member.objects.get(pk=pk)
         drafts = Draft.objects.filter(member_id=member).order_by('-draft_date')
@@ -56,7 +56,7 @@ def my_draft_list(request):
 
 
 def my_draft(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         draft = Draft.objects.get(pk=pk)
         draft.view_count += 1
         draft.save()
@@ -65,7 +65,7 @@ def my_draft(request, pk):
 
 
 def del_draft(request, pk):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         member = Member.objects.get(pk=request.user.id)
         draft = Draft.objects.get(pk=pk)
         if draft.member == member:
