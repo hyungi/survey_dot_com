@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os, json
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.google',
     'survey',
     'draft',
     'member',
@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -148,26 +148,17 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIALACCOUNT_PROVIDERS = \
-    {'facebook':
-         {'METHOD': 'oauth2',
-          'SCOPE': ['email', 'public_profile', 'user_friends'],
-          'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-          'FIELDS': [
-              'id',
-              'email',
-              'name',
-              'first_name',
-              'last_name',
-              'verified',
-              'locale',
-              'timezone',
-              'link',
-              'gender',
-              'updated_time'],
-          'EXCHANGE_TOKEN': True,
-          'LOCALE_FUNC': lambda request: 'kr_KR',
-          'VERIFIED_EMAIL': False,
-          'VERSION': 'v2.4'}}
+    {
+        'facebook':
+            {'SCOPE': ['email', 'publish_stream'],
+             'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+             'METHOD': 'oauth2',
+             'LOCALE_FUNC': lambda request: 'kr_KR',
+             'VERIFIED_EMAIL': False},
+        'google':
+            {'SCOPE': ['profile', 'email'],
+             'AUTH_PARAMS': {'access_type': 'online'}}
+    }
 
 # facebook
 SOCIAL_AUTH_FACEBOOK_KEY = secrets["FACEBOOK_KEY"]  # App ID
@@ -182,3 +173,6 @@ ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_USERNAME_REQURIED = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

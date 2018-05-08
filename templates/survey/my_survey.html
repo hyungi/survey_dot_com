@@ -1,10 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="survey">
-    <p>My Survey Info.</p>
-        {{ survey }}
-        <p><a href="{% url 'edit_survey' pk=survey.id %}">서베이 수정하기!</a></p>
-        <p><a href="{% url 'del_survey' pk=survey.id %}">서베이 지우기!</a></p>
-        <p><a href="{% url 'my_survey_list' %}">내 서베이 목록!</a></p>
+    <h3>My Survey Info.</h3>
+    <div class="card" style="width: 18rem;">
+        {% if survey.survey_image %}
+            <img class="card-img-top" src="{{ survey.survey_image.url }}">
+        {% else %}
+            <img class="card-img-top" src="http://www.ceaohio.org/wp-content/uploads/2015/02/Survey-e1425143371498.jpg">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">Survey Info.</h5>
+            <p class="card-text">
+                {{ survey.title }}<br/>
+                {{ survey.summary }}<br/>
+                {{ survey.content }}
+            </p>
+            <div class="btn-group" role="group">
+                <a href="{% url 'edit_survey' pk=survey.id %}" type="button" class="btn btn-primary">edit</a>
+                <a href="{% url 'del_survey' pk=survey.id %}" type="button" class="btn btn-danger">delete</a>
+            </div>
+        </div>
     </div>
+    <br/>
+
+    <a href="{% url 'my_survey_list' %}" type="button" class="btn btn-success">my list</a>
+    <a href="{% url 'all_survey' %}" class="btn btn-primary">total list</a>
+
+
+
 {% endblock %}

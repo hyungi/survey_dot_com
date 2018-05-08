@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3>Draft List Page</h3>
+        {% for draft in drafts %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p>
+                        {{ survey }}
+                        {% for draft_interest in draft_interests %}
+                            {% if draft.pk == draft_interest.draft %}
+                                좋아요 갯수!!!
+                                {{ draft_interest.count }}
+                                {% if draft_interest.member == member %}
+                                    [[이미 좋아요 했음!]]
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </li>
+            </ul>
+        {% endfor %}
+    <nav class="navbar navbar-light bg-light">
+        <form method="post" class="form-inline" action="{% url 'search_draft' %}">{% csrf_token %}
+            <input class="form-control mr-sm-2" id="query" name="query" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+{% endblock %}

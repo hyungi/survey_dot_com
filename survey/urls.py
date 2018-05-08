@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from survey import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^$', views.all_survey_list, name='all_survey'),
@@ -22,13 +24,15 @@ urlpatterns = [
     url(r'^my/(?P<pk>\d+)/$', views.my_survey, name='my_survey'),
     url(r'^my/(?P<pk>\d+)/delete/$', views.del_survey, name='del_survey'),
     url(r'^my/(?P<pk>\d+)/edit/$', views.edit_survey, name='edit_survey'),
-    # url(r'^survey/new', views.new_survey, name='new_survey'),
     url(r'^(?P<pk>\d+)/respond/$', views.respond_survey, name='respond_survey'),
     url(r'^(?P<pk>\d+)/interest/$', views.interest_survey, name='interest_survey'),
     url(r'^(?P<pk>\d+)/detail/$', views.detail_survey, name='detail_survey'),
     url(r'^new', views.new_survey, name='new_survey'),
+    url(r'^search/$', views.search_survey, name='search_survey'),
 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 '''
 member
 pk 노출 하지 않기

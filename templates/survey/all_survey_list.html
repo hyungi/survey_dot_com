@@ -1,20 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
-<p>Survey List Page</p>
-{% for survey in surveys %}
-    <p>
-    {{ survey }}
-    {{ survey.survey_date }}
-    <a href="{% url 'detail_survey' pk=survey.id %}">설문조사 세부사항 보고 싶습니다..!</a>
+    <h3>Survey List Page</h3>
+{% comment %}
     {% for survey_interest in survey_interests %}
-        {% if survey.pk == survey_interest.survey_id %}
-            좋아요 갯수!!!
-            {{ survey_interest.count }}
-            {% if survey_interest.member == member %}
-                [[이미 좋아요 했음!]]
+        {% for survey in surveys %}
+            {% if survey_interest.survey == survey.pk %}
+                {{ survey }}
+                <a class="btn btn-primary btn-sm" href="{% url 'detail_survey' pk=survey.id %}">Get Detail</a>
+                좋아요: {{ survey_interest.count }}
+                {% if survey_interest.member == member %}
+                    full_heart
+                {% else %}
+                    empty_heart
+                {% endif %}
             {% endif %}
-        {% endif %}
+        {% endfor %}
     {% endfor %}
-    </p>
-{% endfor %}
+{% endcomment %}
+
+        {% for survey in surveys %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p>
+                        {{ survey }}
+                        {% for survey_interest in survey_interests %}
+                            {% if survey.pk == survey_interest.survey %}
+                                좋아요 갯수!!!
+                                {{ survey_interest.count }}
+                                {% if survey_interest.member == member %}
+                                    [[이미 좋아요 했음!]]
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <a class="btn btn-primary btn-sm" href="{% url 'detail_survey' pk=survey.id %}">Get Detail</a>
+                </li>
+            </ul>
+        {% endfor %}
+    <nav class="navbar navbar-light bg-light">
+        <form method="post" class="form-inline" action="{% url 'search_survey' %}">{% csrf_token %}
+            <input class="form-control mr-sm-2" id="query" name="query" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
 {% endblock %}

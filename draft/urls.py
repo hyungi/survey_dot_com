@@ -22,16 +22,10 @@ urlpatterns = [
     url(r'^my/(?P<pk>\d+)/delete/$', views.del_draft, name='del_draft'),
     url(r'^my/(?P<pk>\d+)/edit/$', views.edit_draft, name='edit_draft'),
     url(r'^new', views.new_draft, name='new_draft'),
+    url(r'^search/$', views.search_draft, name='search_draft'),
 ]
 '''
 member
 pk 노출 하지 않기
 (?P<pk>\d+)/주어/동사_목적어
 '''
-
-# url(r'^group/$', views.all_group_list, name='all_group_list'),
-# url(r'^group/(?P<pk>\d+)/$', views.my_group_list, name='my_group_list'),
-# url(r'^group/my/(?P<pk>\d+)/$', views.my_group_detail, name='my_group_detail'),
-# url(r'^group/my/(?P<pk>\d+)/edit/$', views.group_edit, name='group_edit'),
-# url(r'^group/new', views.new_group, name='new_group'),
-# url(r'^group/apply/(?P<pk>\d+)/$', views.apply_group, name='apply_group'),

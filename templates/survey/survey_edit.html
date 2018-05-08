@@ -1,8 +1,12 @@
+{% extends "base.html" %}
 {% block content %}
 
-    <h1>정보수정!</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <h1>Survey edit!</h1>
+    <form method="POST" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
         {{ form.as_p }}
+        </div>
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}

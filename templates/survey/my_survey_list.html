@@ -1,15 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Survey List Page</title>
-</head>
-<body>
-<p>Survey List Page</p>
-{% for survey in surveys %}
-    {{ survey.title }}
-<p><a href="{% url 'my_survey' pk=survey.id %}">서베이 보러가기!</a></p>
-{% endfor %}
-<p><a href="{% url 'new_survey' %}">서베이 만들러가기!</a></p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h3>Survey List Page</h3>
+
+    {% for survey in surveys %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+            <table class="table table-striped">
+                <tr>
+                    <td>title</td>
+                    <td>summary</td>
+                    <td>start date</td>
+                    <td>end date</td>
+                </tr>
+                <tr>
+                    <td>{{ survey.title }}</td>
+                    <td>{{ survey.summary }}</td>
+                    <td>{{ survey.start_date }}</td>
+                    <td>{{ survey.end_date }}</td>
+                </tr>
+
+            </table>
+                <a class="btn btn-primary btn-sm" href="{% url 'my_survey' pk=survey.id %}">Get Detail</a>
+            </li>
+        </ul>
+    {% endfor %}
+    <br />
+    <a href="{% url 'new_survey' %}" type="button" class="btn btn-outline-success">서베이 만들러가기!</a>
+
+{% endblock %}

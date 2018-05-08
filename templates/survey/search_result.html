@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Survey Search Result List Page</h3>
+    {% for survey in surveys %}
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p>
+                    {{ survey }}
+                    {% for survey_interest in survey_interests %}
+                        {% if survey.pk == survey_interest.survey_id %}
+                            좋아요 갯수!!!
+                            {{ survey_interest.count }}
+                            {% if survey_interest.member == member %}
+                                [[이미 좋아요 했음!]]
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <a class="btn btn-primary btn-sm" href="{% url 'detail_survey' pk=survey.id %}">Get Detail</a>
+            </li>
+        </ul>
+    {% endfor %}
+{% endblock %}

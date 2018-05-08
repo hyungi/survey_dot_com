@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from member.models import Member, Category
-
 # survey/models.py
 
 

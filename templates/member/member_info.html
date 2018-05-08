@@ -1,24 +1,65 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="member">
-    <p>유저정보...!</p>
-        {{ member }}
-        <p><a href="{% url 'member_edit' %}">정보 수정!</a></p>
-        <p><a href="{% url 'sign_out' pk=member.id %}">탈퇴 가즈아!</a></p>
-        <p><a href="{% url 'my_survey_list' %}">내 서베이 리스트 보러가기!</a></p>
-        <p><a href="{% url 'all_survey' %}">전체 서베이 리스트 보러가기!</a></p>
-        <p><a href="{% url 'my_draft_list' %}">내 드래프트 리스트 보러가기!</a></p>
+    <div class="select2-container--classic">
+        <p>유저정보...!</p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>이름</th>
+                <th>생년월일</th>
+                <th>전공</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td><a href="{% url 'member_edit' %}">{{ member.name }}</a></td>
+                <td>{{ member.birth }}</td>
+                <td>{{ member.major }}</td>
+                <td>{{ member.email }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{% url 'my_survey_list' %}">내 서베이 리스트 보러가기!</a>
+        <a class="btn btn-primary" href="{% url 'all_survey' %}">전체 서베이 리스트 보러가기!</a>
+        <a class="btn btn-primary" href="{% url 'my_draft_list' %}">내 드래프트 리스트 보러가기!</a>
+        <a class="btn btn-danger" href="{% url 'sign_out' pk=member.id %}">탈퇴 가즈아!</a>
     </div>
-    <div>
+    <div class="select2-container--classic">
         <p>내가 관심있어한 서베이 목록!</p>
         {% for survey_interest in survey_interests %}
             <p>{{ survey_interest }}</p>
         {% endfor %}
     </div>
-    <div>
+    <div class="select2-container--classic">
         <p>내가 응답한 서베이 목록!</p>
         {% for survey_respond in survey_responds %}
             {{ survey_respond }}
+        {% endfor %}
+    </div>
+    <div class="select2-container--classic">
+        <p>인기 서베이 목록!</p>
+        {% for popular_survey in popular_surveys %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p>
+                        {{ popular_survey }}
+                        {% for survey_interest in survey_interests %}
+                            {% if survey.pk == survey_interest.survey_id %}
+                                좋아요 갯수!!!
+                                {{ survey_interest.count }}
+                                {% if survey_interest.member == member %}
+                                    [[이미 좋아요 했음!]]
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <a class="btn btn-primary btn-sm" href="{% url 'detail_survey' pk=popular_survey.survey.pk %}">Get
+                        Detail</a>
+                </li>
+            </ul>
         {% endfor %}
     </div>
 {% endblock %}

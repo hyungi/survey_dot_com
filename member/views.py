@@ -1,9 +1,14 @@
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 
 from survey.models import SurveyInterest, SurveyRespond
 from .forms import MemberForm
 from .models import Member
+from django.contrib.auth.models import User
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 # member/views.py
+
+# class SocialAccountAdapter(DefaultSocialAccountAdapter):
 
 
 def member_info(request):
@@ -12,6 +17,11 @@ def member_info(request):
         print(pk)
         member = Member.objects.get(pk=pk)
 
+        if member.incomplete_member() is False:
+            return redirect('member_edit')
+
+        popular_surveys = SurveyInterest.objects.select_related('survey').all().annotate(count=Count('survey')).order_by('-count')[:10]
+        print(popular_surveys)
         survey_interests = SurveyInterest.objects.filter(member=member)
         survey_responds = SurveyRespond.objects.filter(member=member)
         print("member_info: " + str(member))
@@ -19,6 +29,7 @@ def member_info(request):
             'member': member,
             'survey_interests': survey_interests,
             'survey_responds': survey_responds,
+            'popular_surveys': popular_surveys,
         })
 
 
@@ -42,9 +53,10 @@ def member_edit(request):
 
 def sign_out(request, pk):
     if request.user.is_authenticated:
-        member = Member.objects.get(pk=pk)
-
-        print("이 친구를 지우는 거..! ")
-        print(member)
+        # member = Member.objects.get(pk=pk)
+        user = User.objects.get(pk=pk)
+        user.is_active = False
+        user.save()
+        print("이 친구를 지우는 거..! " + str(user.is_active))
         # member.delete()
         return render(request, 'index.html')
