@@ -150,7 +150,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIALACCOUNT_PROVIDERS = \
     {
         'facebook':
-            {'SCOPE': ['email', 'publish_stream'],
+            {'SCOPE': ['email'],
              'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
              'METHOD': 'oauth2',
              'LOCALE_FUNC': lambda request: 'kr_KR',

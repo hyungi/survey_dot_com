@@ -1,23 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
     <h3>Survey List Page</h3>
-{% comment %}
-    {% for survey_interest in survey_interests %}
-        {% for survey in surveys %}
-            {% if survey_interest.survey == survey.pk %}
-                {{ survey }}
-                <a class="btn btn-primary btn-sm" href="{% url 'detail_survey' pk=survey.id %}">Get Detail</a>
-                좋아요: {{ survey_interest.count }}
-                {% if survey_interest.member == member %}
-                    full_heart
-                {% else %}
-                    empty_heart
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-{% endcomment %}
-
         {% for survey in surveys %}
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">

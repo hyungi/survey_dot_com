@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>정보수정!</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Save</button>
         <a href="{% url 'member_info' %}" class="btn btn-secondary">Cancel</a>

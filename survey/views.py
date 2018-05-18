@@ -31,7 +31,7 @@ def search_survey(request):
 @login_required
 def new_survey(request):
     if request.method == "POST":
-        form = SurveyForm(request.POST)
+        form = SurveyForm(request.POST, request.FILES)
         if form.is_valid():
             survey = form.save()
             member = Member.objects.get(pk=request.user.id)
@@ -120,9 +120,10 @@ def detail_survey(request, pk):
     # 이 서베이의 주인이 아님을 확인
     if SurveyProduce.objects.filter(pk=pk, member=request.user.id).count() == 0:
         interest_count = SurveyInterest.objects.filter(survey=survey).count()
-        print(interest_count)
+        print("number of interests", interest_count)
         already_interested = SurveyInterest.objects.filter(survey=survey, member=request.user.id).count()
-        print(already_interested)
+        if already_interested == 1:
+            print("already_interested")
         survey.view_count += 1
         survey.save()
         return render(request, 'survey/detail_survey.html', {
@@ -161,17 +162,25 @@ def interest_survey(request, pk):
     member = Member.objects.get(pk=request.user.id)
     survey = Survey.objects.get(pk=pk)
     if SurveyProduce.objects.filter(member=member, survey=survey).count() == 0:
+        SurveyInterest.objects.create(member=member, survey=survey)
+        print("관심표시!")
+        # return redirect('detail_survey', survey='survey')
+        return render(request, 'survey/detail_survey.html', {'survey': survey})
+
+    else:
+        print("자기가 만든 서베이는 관심 표시 금지!")
+        return render(request, 'survey/detail_survey.html', {'survey': survey})
+
+
+@login_required
+def cancel_interest(request, pk):
+    member = Member.objects.get(pk=request.user.id)
+    survey = Survey.objects.get(pk=pk)
+    if SurveyProduce.objects.filter(member=member, survey=survey).count() == 0:
         survey_interest = SurveyInterest.objects.filter(member=member, survey=survey)
-        if survey_interest.count() == 0:
-            # 관심 표현한적 없을때만!
-            SurveyInterest.objects.create(member=member, survey=survey)
-            print("관심표시!")
-            # return redirect('detail_survey', survey='survey')
-            return render(request, 'survey/detail_survey.html', {'survey': survey})
-        else:
-            survey_interest.delete()
-            print("관심표시 취소!")
-            return render(request, 'survey/detail_survey.html', {'survey': survey})
+        survey_interest.delete()
+        print("관심표시 취소!")
+        return render(request, 'survey/detail_survey.html', {'survey': survey})
 
     else:
         print("자기가 만든 서베이는 관심 표시 금지!")

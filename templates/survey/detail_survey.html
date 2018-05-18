@@ -14,15 +14,15 @@
                 {{ survey.content }}
             </p>
             <p>
-                [좋아요 갯수!!] {{ interest_count }}
+                [좋아요 갯수!!] <a id="interest_count">{{ interest_count }}</a>
             </p>
 
             <div class="btn-group" role="group">
                 <a href="{% url 'respond_survey' pk=survey.id %}" type="button" class="btn btn-secondary">응답</a>
                 {% if already_interested == 0 %}
-                    <a href="{% url 'interest_survey' pk=survey.id %}" type="button" class="btn btn-secondary">관심</a>
+                    <a href="{% url 'interest_survey' pk=survey.id %}" type="button" class="btn btn-secondary" name={{ already_interested }}>관심</a>
                 {% else %}
-                    <a href="{% url 'interest_survey' pk=survey.id %}" type="button" class="btn btn-secondary">관심취소</a>
+                    <a href="{% url 'interest_survey' pk=survey.id %}" type="button" class="btn btn-secondary" name={{ already_interested }}>관심취소</a>
                 {% endif %}
             </div>
         </div>
@@ -30,3 +30,21 @@
     <br/>
     <a class="btn btn-primary" href="{% url 'all_survey' %}">서베이 전체 목록 보기!</a>
 {% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    $(".btn btn-secondary").click(function () {
+        console.log("test");
+        //var already_interested = $(this).attr('name');
+        //var interest_count = $("#interest_count").val();
+        //console.log(already_interested);
+        //console.log(interest_count);
+        $.ajax({
+            url: 'interest_survey',
+            data: {'interest_count':interest_count, 'already_interested': already_interested, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function () {
+                $(".card-body").reload()
+            }
+        })
+    });
+</script>

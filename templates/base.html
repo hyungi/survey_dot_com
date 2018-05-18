@@ -14,7 +14,7 @@
 {#    <em>Important: Authentication via OAuth based providers will not work until you <a#}
 {#            href="/admin/socialaccount/socialapp/">setup proper applicaton credentials</a>.</em>#}
 
-    {% if messages %}
+{% comment %}    {% if messages %}
         <div>
             <strong>Messages:</strong>
             <ul>
@@ -23,7 +23,7 @@
                 {% endfor %}
             </ul>
         </div>
-    {% endif %}
+    {% endif %}{% endcomment %}
 
     <div style="margin-top: 10px">
 {#        <strong>Menu:</strong>#}

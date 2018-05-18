@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^my/(?P<pk>\d+)/edit/$', views.edit_survey, name='edit_survey'),
     url(r'^(?P<pk>\d+)/respond/$', views.respond_survey, name='respond_survey'),
     url(r'^(?P<pk>\d+)/interest/$', views.interest_survey, name='interest_survey'),
+    url(r'^(?P<pk>\d+)/cancel_interest/$', views.cancel_interest, name='cancel_interest'),
     url(r'^(?P<pk>\d+)/detail/$', views.detail_survey, name='detail_survey'),
     url(r'^new', views.new_survey, name='new_survey'),
     url(r'^search/$', views.search_survey, name='search_survey'),
