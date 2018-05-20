@@ -138,6 +138,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+            os.path.join(BASE_DIR, 'static'),
+            ]
+
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -149,7 +153,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIALACCOUNT_PROVIDERS = \
     {
         'facebook':
-            {'SCOPE': ['email', 'publish_stream'],
+            {'SCOPE': ['email'],
              'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
              'METHOD': 'oauth2',
              'LOCALE_FUNC': lambda request: 'kr_KR',
