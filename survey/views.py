@@ -31,7 +31,7 @@ def search_survey(request):
 @login_required
 def new_survey(request):
     if request.method == "POST":
-        form = SurveyForm(request.POST)
+        form = SurveyForm(request.POST, request.FILES)
         if form.is_valid():
             survey = form.save()
             member = Member.objects.get(pk=request.user.id)
