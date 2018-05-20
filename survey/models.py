@@ -9,6 +9,9 @@ class SurveyImage(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
+def get_end_date():
+    return timezone.now() + timezone.timedelta(days=10)
+
 class Survey(models.Model):
     title = models.CharField(max_length=100, default="")
     summary = models.TextField()
@@ -20,7 +23,7 @@ class Survey(models.Model):
     recent_edit_date = models.DateTimeField(default=timezone.now)
     feedback_count = models.PositiveIntegerField(default=0)
     start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now()+timezone.timedelta(days=10))
+    end_date = models.DateTimeField(default=get_end_date)
     additional_respond_flag = models.BooleanField(default=False)
     survey_image = models.ImageField(null=True)
     survey_image_id = models.ForeignKey(SurveyImage, on_delete=models.CASCADE, null=True)
